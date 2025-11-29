@@ -5,7 +5,10 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from PIL import Image
 import io
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)  # Add this line
 load_dotenv()
 
 app = Flask(__name__)
