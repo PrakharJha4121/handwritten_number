@@ -182,3 +182,38 @@ main { display: flex; flex-direction: column; gap: 26px; }
   .upload-box { padding: 14px; font-size: 1em;}
   .modal-content { padding: 14px;}
 }
+
+.auth-modal { max-width: 365px; padding: 40px 32px !important; }
+.form-switch {
+  display: flex; gap: 2px; padding-bottom: 18px;
+  justify-content: stretch; margin-bottom: 8px;
+}
+.switch-btn {
+  flex: 1; background: #222; color: #aaa;
+  border: none; font-weight: 600; font-size: 1em;
+  padding: 11px 0; cursor: pointer; border-radius: 8px 8px 0 0;
+  transition: background 0.23s, color 0.23s;
+}
+.switch-btn.active { background: var(--accent2); color: #fff; }
+
+.full-width { width: 100%; }
+
+.form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+.form-group label {
+  color: #ccc; font-size: 0.99em; font-weight: 500; margin-left: 2px;
+  letter-spacing: .04em; margin-bottom: 3px;
+}
+.form-group input {
+  padding: 12px; border-radius: 8px;
+  border: 2px solid #333; background: #181818; color: #fff;
+  font-size: 1em; transition: border-color 0.25s;
+}
+.form-group input:focus { border-color: var(--accent2); outline: none; }
+
+.extra-tip {
+  margin-top: 18px;
+  font-size: .97em;
+  color: #aaa;
+  text-align: center;
+}
+.extra-tip a { color: var(--accent2); text-decoration: underline; cursor: pointer; }
