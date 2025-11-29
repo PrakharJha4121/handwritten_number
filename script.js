@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://handwritten-number-1.onrender.com';
+const API_BASE_URL = 'https://handwritten-number-2.onrender.com';
 
 // --- IMAGE UPLOAD & PREVIEW ---
 
