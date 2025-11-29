@@ -41,7 +41,7 @@ def identify_digit():
         image = Image.open(io.BytesIO(image_data))
         
         # Use the newer, faster model (gemini-pro-vision is deprecated)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = """Look at this image and identify the handwritten digit(s). 
         Respond with ONLY the digit itself (e.g., "7"). 
