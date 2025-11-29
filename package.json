@@ -1,0 +1,13 @@
+{
+  "name": "handwritten-number-identifier",
+  "version": "1.0.0",
+  "description": "Web app to identify handwritten digits using Gemini AI",
+  "main": "index.js",
+  "scripts": {
+    "serve": "python -m http.server 8000",
+    "deploy": "firebase deploy"
+  },
+  "keywords": ["handwritten", "digit", "recognition", "gemini", "ai"],
+  "author": "PrakharJha4121",
+  "license": "MIT"
+}
