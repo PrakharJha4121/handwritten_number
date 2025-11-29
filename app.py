@@ -5,15 +5,19 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from PIL import Image
 import io
-import base64
 
 load_dotenv()
 
 app = Flask(__name__)
+# Allow CORS for all domains to prevent frontend connection errors
 CORS(app)
 
 # Configure Gemini API
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    print("Error: GEMINI_API_KEY not found in .env file")
+
 genai.configure(api_key=GEMINI_API_KEY)
 
 @app.route('/api/identify', methods=['POST'])
@@ -31,30 +35,25 @@ def identify_digit():
         if file.filename == '':
             return jsonify({"error": "No file selected"}), 400
         
-        # Read and process image
+        # Read and process image using PIL
+        # We don't need manual base64 encoding; the SDK handles PIL images directly
         image_data = file.read()
         image = Image.open(io.BytesIO(image_data))
         
-        # Prepare image for Gemini
-        image_base64 = base64.standard_b64encode(image_data).decode('utf-8')
+        # Use the newer, faster model (gemini-pro-vision is deprecated)
+        model = genai.GenerativeModel('gemini-1.5-flash')
         
-        # Call Gemini API
-        model = genai.GenerativeModel('gemini-pro-vision')
-        prompt = """Look at this image and identify any handwritten digit(s) visible in it. 
-        Please respond with:
-        1. The digit(s) you see (0-9)
-        2. Your confidence level (0-1)
-        3. Any other relevant information
+        prompt = """Look at this image and identify the handwritten digit(s). 
+        Respond with ONLY the digit itself (e.g., "7"). 
+        If you are unsure, say "Could not identify". 
+        Do not provide JSON, just the plain text result."""
         
-        Format your response as JSON."""
-        
-        response = model. generate_content([
-            prompt,
-            {"mime_type": "image/jpeg", "data": image_base64}
-        ])
+        # FIXED: Removed space between model. and generate_content
+        # simplified call: passing the PIL image object directly handles PNG/JPG automatically
+        response = model.generate_content([prompt, image])
         
         # Parse response
-        result_text = response.text
+        result_text = response.text.strip()
         
         return jsonify({
             "success": True,
@@ -63,6 +62,7 @@ def identify_digit():
         }), 200
     
     except Exception as e:
+        print(f"Error: {str(e)}") # Print error to terminal for debugging
         return jsonify({
             "success": False,
             "error": str(e)
